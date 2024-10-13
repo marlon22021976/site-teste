@@ -21,7 +21,7 @@
         nav {
             display: flex;
             justify-content: center;
-            background-color: #333;
+            background-color: #ec636a;
         }
         nav a {
             color: white;
@@ -30,7 +30,7 @@
             text-transform: uppercase;
         }
         nav a:hover {
-            background-color: #575757;
+            background-color: #47bbe9;
         }
         .container {
             max-width: 1200px;
@@ -43,7 +43,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: rgb(39, 9, 209);
             text-align: center;
         }
         .hero h1 {
@@ -65,18 +65,19 @@
             color: #333;
         }
         .footer {
-            background-color: #333;
-            color: white;
+            background-color: #e69797;
+            color: rgb(65, 62, 62);
             text-align: center;
             padding: 15px 0;
             margin-top: 20px;
         }
+        
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Grupo de Corrida Palhoça</h1>
+    <h1>Grupo de Corrida Online</h1>
 </header>
 
 <nav>
@@ -85,11 +86,62 @@
     <a href="#contato">Contato</a>
     <a href="index4.html">Saiba do seu IMC</a>
 </nav>
-<video width="320" height="240" autoplay muted>
-    <source src="imagem/istockphoto-1158450110-640_adpp_is.mp4" type="video/mp4">
+<div>
+    <style>
+        /* Estilo para o contêiner principal */
+        .content-container {
+            display: flex; /* Coloca os elementos lado a lado */
+            justify-content: center; /* Centraliza os elementos na página */
+            align-items: center; /* Alinha os elementos verticalmente */
+            gap: 20px; /* Espaçamento entre o vídeo e o texto */
+            padding: 20px;
+        }
+
+        /* Estilo para o vídeo */
+        video {
+            width: 50%; /* Ajusta o tamanho do vídeo */
+            max-width: 600px; /* Limita a largura máxima do vídeo */
+            height: auto; /* Mantém a proporção do vídeo */
+            
+        }
+
+        /* Estilo para o bloco de texto */
+        .text-content {
+            width: 50%; /* Ajusta a largura do texto */
+            max-width: 400px; /* Limita a largura máxima do bloco de texto */
+            font-size: 16px; /* Tamanho da fonte do texto */
+            line-height: 1.5; /* Espaçamento entre as linhas do texto */
+        }
+    
+        
+    </style>
+</head>
+<body>
+
+<div class="content-container">
+    <video controls autoplay muted loop>
+        <source src="imagem/istockphoto-1158450110-640_adpp_is.mp4" type="video/mp4">
+        Seu navegador não suporta o elemento de vídeo.
+    </video>
+
+    <div class="text-content">
+        <h2>Título do Texto</h2>
+        <p>
+            Este é um exemplo de texto que aparece ao lado do vídeo. Você pode usar este espaço para fornecer
+            informações adicionais, descrições ou qualquer outro conteúdo relevante relacionado ao vídeo.
+        </p>
+        <p>
+            Sinta-se à vontade para ajustar o estilo e o layout para melhor atender às suas necessidades.
+        </p>
+    </div>
+</div>
+
+
+
+    </style>
     
   </video>
-
+</div>
 <section class="hero">
     <div>
         <h1>Venha correr com a gente!</h1>
