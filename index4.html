@@ -7,11 +7,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f0f0f0;
         }
 
@@ -20,9 +22,9 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            width: 90%;
+            max-width: 600px;
             text-align: center;
-            margin-bottom: 20px;
         }
 
         input {
@@ -41,23 +43,33 @@
             border-radius: 4px;
             cursor: pointer;
             width: 100%;
+            margin-top: 10px;
         }
 
         button:hover {
             background-color: #218838;
         }
 
+        .hidden {
+            display: none;
+        }
+
         .result {
             margin-top: 10px;
             font-weight: bold;
         }
+
+        canvas {
+            margin-top: 20px;
+            width: 100% !important;
+            height: auto !important;
+        }
     </style>
-    <!-- Importando a biblioteca Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="formularioIMC">
         <h2>Calculadora de IMC</h2>
         <label for="altura">Altura (em metros):</label>
         <input type="number" id="altura" placeholder="Ex: 1.75" step="0.01">
@@ -66,13 +78,17 @@
         <input type="number" id="peso" placeholder="Ex: 70" step="0.1">
 
         <button onclick="calcularIMC()">Calcular IMC</button>
-
-        <div class="result" id="resultado"></div>
     </div>
 
-    <canvas id="graficoIMC" width="400" height="200"></canvas>
+    <div class="container hidden" id="resultadoIMC">
+        <div class="result" id="resultado"></div>
+        <canvas id="graficoIMC"></canvas>
+        <button onclick="redefinirFormulario()">Calcular Novamente</button>
+    </div>
 
     <script>
+        let chart; // Variável para armazenar o gráfico para reutilização
+
         function calcularIMC() {
             const altura = parseFloat(document.getElementById('altura').value);
             const peso = parseFloat(document.getElementById('peso').value);
@@ -92,12 +108,14 @@
                     classificacao = 'Obesidade grau I';
                 } else if (imc >= 35 && imc <= 39.9) {
                     classificacao = 'Obesidade grau II';
-                } else {
+                } else if (imc > 40.0) {
                     classificacao = 'Obesidade grau III';
+                   }   else {
                 }
 
                 resultado.textContent = `Seu IMC é: ${imc.toFixed(2)} (${classificacao})`;
                 atualizarGrafico(imc);
+                mostrarResultado();
             } else {
                 resultado.textContent = 'Por favor, insira valores válidos para altura e peso.';
             }
@@ -106,13 +124,18 @@
         function atualizarGrafico(imc) {
             const ctx = document.getElementById('graficoIMC').getContext('2d');
 
-            new Chart(ctx, {
+            // Remove o gráfico anterior, se existir, para evitar sobreposição
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Abaixo do peso', 'Peso normal', 'Sobrepeso', 'Obesidade grau I', 'Obesidade grau II', 'Obesidade grau III'],
                     datasets: [{
                         label: 'Classificação do IMC',
-                        data: [18.5, 24.9, 29.9, 34.9, 39.9, 45], // Limites das categorias do IMC
+                        data: [18.5, 24.9, 29.9, 34.9, 39.9, 45],
                         backgroundColor: [
                             '#f39c12', // Abaixo do peso
                             '#2ecc71', // Peso normal
@@ -123,8 +146,8 @@
                         ]
                     }, {
                         label: 'Seu IMC',
-                        data: [imc, imc, imc, imc, imc, imc], // Exibindo o IMC do usuário em todas as categorias
-                        backgroundColor: 'rgba(52, 152, 219, 0.7)' // Cor do IMC do usuário
+                        data: [imc, imc, imc, imc, imc, imc],
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)'
                     }]
                 },
                 options: {
@@ -137,6 +160,18 @@
                     }
                 }
             });
+        }
+
+        function mostrarResultado() {
+            document.getElementById('formularioIMC').classList.add('hidden');
+            document.getElementById('resultadoIMC').classList.remove('hidden');
+        }
+
+        function redefinirFormulario() {
+            document.getElementById('altura').value = '';
+            document.getElementById('peso').value = '';
+            document.getElementById('resultadoIMC').classList.add('hidden');
+            document.getElementById('formularioIMC').classList.remove('hidden');
         }
     </script>
 
